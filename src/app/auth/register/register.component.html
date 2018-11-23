@@ -1,0 +1,45 @@
+<div class="wrapper">
+
+  <mat-tab-group [selectedIndex]="currentStep" [dynamicHeight]="true">
+
+    <mat-tab label="Step 1">
+      <form [formGroup]="registerForm" (ngSubmit)="onNextStep()">
+
+        <mat-form-field>
+          <input formControlName="firstName" type="text" matInput placeholder="First name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="lastName" type="text" matInput placeholder="Last name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="email" type="text" matInput placeholder="Email">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="password" type="password" matInput placeholder="Password">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input formControlName="confirmPassword" type="password" matInput placeholder="Confirm Password">
+        </mat-form-field>
+
+        <button type="submit" mat-raised-button color="primary"
+                [disabled]="registerForm.invalid" class="next-btn">Next</button>
+
+      </form>
+    </mat-tab>
+
+    <mat-tab label="Step 2" [disabled]="registerForm.invalid">
+      <img [src]="selectedImageSrc || profilePlaceholderSrc" class="profile-avatar">
+      <input #avatarInput type="file" [hidden]="true" (change)="onImageChange($event)">
+      <div class="btn-group">
+        <button type="button" mat-raised-button color="default" (click)="avatarInput.click()">Select avatar</button>
+        <button type="button" mat-raised-button color="primary" (click)="onRegister()">Register</button>
+      </div>
+    </mat-tab>
+
+  </mat-tab-group>
+
+</div>
