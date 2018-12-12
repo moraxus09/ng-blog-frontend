@@ -5,6 +5,8 @@ import {AuthRoutingModule} from './auth-routing.module';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
 import {MatButtonModule, MatInputModule, MatTabsModule} from '@angular/material';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {AuthInterceptor} from './auth.interceptor';
 
 @NgModule({
   imports: [
@@ -18,6 +20,13 @@ import {MatButtonModule, MatInputModule, MatTabsModule} from '@angular/material'
   declarations: [
     LoginComponent,
     RegisterComponent
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ]
 })
 export class AuthModule {}
