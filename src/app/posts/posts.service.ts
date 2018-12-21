@@ -24,8 +24,12 @@ export class PostsService {
     return this.http.get<Post>(`${this.postsUrl}/${id}`);
   }
 
-  public createPost(post: Post): Observable<{postId: string}> {
-    return this.http.post<{postId: string}>(this.postsUrl, post);
+  public createPost(title: string, text: string, preview: File): Observable<{postId: string}> {
+    const postData = new FormData();
+    postData.set('title', title);
+    postData.set('text', text);
+    postData.set('preview', preview);
+    return this.http.post<{postId: string}>(this.postsUrl, postData);
   }
 
   public editPost(post: Post): Observable<void> {

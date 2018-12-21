@@ -4,18 +4,16 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {AuthRoutingModule} from './auth-routing.module';
 import {LoginComponent} from './login/login.component';
 import {RegisterComponent} from './register/register.component';
-import {MatButtonModule, MatInputModule, MatTabsModule} from '@angular/material';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {AuthInterceptor} from './auth.interceptor';
+import {SharedModule} from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
+    SharedModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    MatTabsModule,
-    MatInputModule,
-    MatButtonModule
   ],
   declarations: [
     LoginComponent,

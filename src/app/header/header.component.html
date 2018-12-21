@@ -1,0 +1,14 @@
+<mat-toolbar>
+  <a routerLink="/dashboard">Blog</a>
+  <div>
+    <ng-container *ngIf="!auth.loggedIn()">
+      <button routerLink="/login" mat-button color="primary">Login</button>
+      <button routerLink="/register" mat-button color="primary">Registration</button>
+    </ng-container>
+
+    <ng-container *ngIf="auth.loggedIn()">
+      <span>{{(user | async)?.firstName}}</span>
+      <button mat-button color="primary" (click)="auth.logout()">Logout</button>
+    </ng-container>
+  </div>
+</mat-toolbar>

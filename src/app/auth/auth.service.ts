@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {apiEndpoints} from '../config/api-endpoints';
-import {Observable, ReplaySubject} from 'rxjs';
+import {BehaviorSubject, EMPTY, Observable} from 'rxjs';
 import {User} from '../models/user';
-import {map, tap} from 'rxjs/operators';
+import {map, tap, exhaustMap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 export interface RegistrationData {
@@ -24,11 +24,13 @@ export interface AuthResponse {
 })
 export class AuthService {
 
+  private readonly userInfoUrl: string;
   private readonly registerUrl: string;
   private readonly loginUrl: string;
-  private readonly user$ = new ReplaySubject<User>(1);
+  private readonly user$ = new BehaviorSubject<User>(null);
 
   constructor(private http: HttpClient, private router: Router) {
+    this.userInfoUrl = apiEndpoints.currentUser;
     this.registerUrl = apiEndpoints.register;
     this.loginUrl = apiEndpoints.login;
   }
@@ -46,12 +48,21 @@ export class AuthService {
   }
 
   public logout() {
-    this.setToken(null);
+    this.removeToken();
     this.user$.next(null);
     this.router.navigate(['login']);
   }
 
+  public loggedIn(): boolean {
+    return !!this.getToken();
+  }
+
   public getUser(): Observable<User> {
+    if (!this.user$.getValue()) {
+      // EMPTY.pipe(exhaustMap(() => this.http.get(this.userInfoUrl)))
+      //   .subscribe((user: User) => this.user$.next(user), (err) => console.log(err));
+      this.http.get<User>(this.userInfoUrl).subscribe((user) => this.user$.next(user));
+    }
     return this.user$.asObservable();
   }
 
@@ -69,8 +80,12 @@ export class AuthService {
     );
   }
 
-  private setToken(token: string | null) {
+  private setToken(token: string) {
     localStorage.setItem('token', token);
+  }
+
+  private removeToken(): void {
+    localStorage.removeItem('token');
   }
 
 }

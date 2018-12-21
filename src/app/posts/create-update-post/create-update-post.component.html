@@ -1,0 +1,22 @@
+<mat-card>
+  <form [formGroup]="postForm" (ngSubmit)="onSubmit()">
+
+    <mat-form-field>
+      <input formControlName="title" type="text" matInput placeholder="Title">
+    </mat-form-field>
+
+    <mat-form-field>
+      <textarea formControlName="text" type="text" rows="4" matInput placeholder="Text"></textarea>
+    </mat-form-field>
+
+    <button type="button" mat-raised-button color="default" (click)="previewInput.click()">Select Preview</button>
+    <input #previewInput type="file" [hidden]="true" (change)="onPreviewChange($event)">
+    <img *ngIf="previewSrc" [src]="previewSrc" class="preview">
+
+    <div class="bottom-btns">
+      <button *ngIf="editMode" type="button" mat-raised-button color="warn">Delete</button>
+      <button type="submit" mat-raised-button color="primary">{{editMode ? 'Update' : 'Create'}}</button>
+    </div>
+
+  </form>
+</mat-card>

@@ -5,6 +5,7 @@ export interface Post {
   readonly owner: UserPreview;
   title: string;
   text: string;
+  previewSrc: string;
   likes: number;
   dislikes: number;
 }

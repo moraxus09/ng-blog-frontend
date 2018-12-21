@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators} from '@angular/forms';
 import {AuthService} from '../auth.service';
 import {paths} from '../../config/globals';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent implements OnInit {
   selectedImage: File;
   fileReader = new FileReader();
 
-  constructor(private auth: AuthService, private fb: FormBuilder) {}
+  constructor(private auth: AuthService, private router: Router, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.initForm();
@@ -41,7 +42,7 @@ export class RegisterComponent implements OnInit {
     if (this.registerForm.valid) {
       const formData = this.selectedImage ? {...this.registerForm.value, avatar: this.selectedImage} : this.registerForm.value;
       delete formData.confirmPassword;
-      this.auth.register(formData).subscribe(() => alert('registration successful'));
+      this.auth.register(formData).subscribe(() => this.router.navigate(['dashboard']));
     }
   }
 
