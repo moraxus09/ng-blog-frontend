@@ -5,27 +5,8 @@
   margin-bottom: -35px;
 }
 
-mat-card {
+app-post {
+  display: block;
   width: 520px;
   margin: 0 auto 35px;
-}
-
-.user-avatar {
-  background-size: cover;
-}
-
-.likes-dislikes {
-  margin-left: auto;
-}
-
-.likes-dislikes-count {
-  display: inline-block;
-  margin-right: 4px;
-}
-
-.preview {
-  display: block;
-  object-fit: cover;
-  max-width: 100%;
-  height: auto;
 }

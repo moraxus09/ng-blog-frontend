@@ -1,32 +1,5 @@
-<mat-card *ngFor="let post of posts | async">
-
-  <mat-card-header>
-    <div mat-card-avatar [style.background-image]="'url(' + apiEndpoint + post.owner.avatarSrc + ')'"
-         class="user-avatar"></div>
-    <mat-card-title>{{post.owner.firstName + ' ' + post.owner.lastName}}</mat-card-title>
-    <mat-card-subtitle>12.18.2018</mat-card-subtitle>
-    <div class="likes-dislikes">
-      <button type="button" mat-icon-button color="default">
-        <span class="likes-dislikes-count">{{post.likes || 0}}</span>
-        <mat-icon>thumb_up_alt</mat-icon>
-      </button>
-      <button type="button" mat-icon-button color="default">
-        <span class="likes-dislikes-count">{{post.dislikes || 0}}</span>
-        <mat-icon>thumb_down_alt</mat-icon>
-      </button>
-    </div>
-  </mat-card-header>
-
-  <img mat-card-image [src]="apiEndpoint + post.previewSrc" class="preview" alt="Post Preview">
-
-  <mat-card-content>
-    <mat-card-title>{{post.title}}</mat-card-title>
-    <p>{{post.text}}</p>
-  </mat-card-content>
-
-  <mat-card-actions *ngIf="(user | async)?._id === post.owner.id">
-    <button mat-button color="warn">Delete</button>
-    <button mat-button color="primary">Edit</button>
-  </mat-card-actions>
-
-</mat-card>
+<app-post *ngFor="let post of posts"
+          [post]="post"
+          [user]="user | async"
+          (delete)="onPostDelete(post._id)"
+          (rateChange)="onPostRateChange(post)"></app-post>

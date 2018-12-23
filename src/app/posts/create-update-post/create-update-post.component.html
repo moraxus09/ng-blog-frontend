@@ -14,8 +14,11 @@
     <img *ngIf="previewSrc" [src]="previewSrc" class="preview">
 
     <div class="bottom-btns">
-      <button *ngIf="editMode" type="button" mat-raised-button color="warn">Delete</button>
-      <button type="submit" mat-raised-button color="primary">{{editMode ? 'Update' : 'Create'}}</button>
+      <div>
+        <button routerLink="/dashboard" class="cancel-btn" type="button" mat-raised-button color="default">Cancel</button>
+        <button *ngIf="editingPostId" (click)="onDelete()" type="button" mat-raised-button color="warn">Delete</button>
+      </div>
+      <button type="submit" mat-raised-button color="primary">{{editingPostId ? 'Update' : 'Create'}}</button>
     </div>
 
   </form>

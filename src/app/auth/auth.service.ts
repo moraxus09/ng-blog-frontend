@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {apiEndpoints} from '../config/api-endpoints';
-import {BehaviorSubject, EMPTY, Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {User} from '../models/user';
-import {map, tap, exhaustMap} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 import {Router} from '@angular/router';
 
 export interface RegistrationData {
@@ -58,9 +58,7 @@ export class AuthService {
   }
 
   public getUser(): Observable<User> {
-    if (!this.user$.getValue()) {
-      // EMPTY.pipe(exhaustMap(() => this.http.get(this.userInfoUrl)))
-      //   .subscribe((user: User) => this.user$.next(user), (err) => console.log(err));
+    if (this.loggedIn() && !this.user$.getValue()) {
       this.http.get<User>(this.userInfoUrl).subscribe((user) => this.user$.next(user));
     }
     return this.user$.asObservable();

@@ -4,6 +4,7 @@ export interface PostCommentary {
   readonly _id?: string;
   readonly postId: string;
   readonly owner: UserPreview;
-  likes: number;
-  dislikes: number;
+  likes: string[];
+  dislikes: string[];
+  timestamp: number;
 }

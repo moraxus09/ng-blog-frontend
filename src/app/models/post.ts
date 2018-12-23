@@ -6,6 +6,7 @@ export interface Post {
   title: string;
   text: string;
   previewSrc: string;
-  likes: number;
-  dislikes: number;
+  likes: string[];
+  dislikes: string[];
+  timestamp: number;
 }

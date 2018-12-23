@@ -32,7 +32,7 @@ export class PostsService {
     return this.http.post<{postId: string}>(this.postsUrl, postData);
   }
 
-  public editPost(post: Post): Observable<void> {
+  public updatePost(post: Post): Observable<void> {
     return this.http.put<void>(`${this.postsUrl}/${post._id}`, post);
   }
 

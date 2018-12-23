@@ -4,8 +4,8 @@ import {PostsService} from '../posts.service';
 import {Observable} from 'rxjs';
 import {User} from '../../models/user';
 import {Post} from '../../models/post';
-import {map} from 'rxjs/internal/operators';
 import {domain} from '../../config/api-endpoints';
+import {MatSnackBar} from '@angular/material';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,16 +16,27 @@ export class DashboardComponent implements OnInit {
 
   apiEndpoint: string;
   user: Observable<User>;
-  posts: Observable<Post[]>;
+  posts: Post[];
 
-  constructor(private auth: AuthService, private postsService: PostsService) {
+  constructor(private auth: AuthService, private postsService: PostsService, private snackBar: MatSnackBar) {
     this.apiEndpoint = domain;
   }
 
   ngOnInit() {
     this.user = this.auth.getUser();
-    this.posts = this.postsService.getPosts()
-      .pipe(map((res: {posts: Post[], count: number}) => res.posts));
+    this.postsService.getPosts().subscribe((res: {posts: Post[], count: number}) => {
+      this.posts = res.posts;
+    });
+  }
+
+  onPostDelete(id: string) {
+    this.postsService.deletePost(id).subscribe(() => {
+      this.posts = this.posts.filter(post => post._id !== id);
+    });
+  }
+
+  onPostRateChange(post: Post) {
+    this.postsService.updatePost(post).subscribe();
   }
 
 }

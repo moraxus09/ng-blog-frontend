@@ -24,7 +24,7 @@ export class CommentsService {
     return this.http.post<{commentId: string}>(this.getCommentsUrl(comment.postId), comment);
   }
 
-  public editComment(comment: PostCommentary): Observable<void> {
+  public updateComment(comment: PostCommentary): Observable<void> {
     return this.http.put<void>(`${this.getCommentsUrl(comment.postId)}/${comment._id}`, comment);
   }
 

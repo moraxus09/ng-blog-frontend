@@ -1,5 +1,8 @@
 <mat-toolbar>
-  <a routerLink="/dashboard">Blog</a>
+  <div>
+    <a class="blog-label" routerLink="/dashboard">Blog</a>
+    <button routerLink="/posts/new" mat-button color="primary">Create post</button>
+  </div>
   <div>
     <ng-container *ngIf="!auth.loggedIn()">
       <button routerLink="/login" mat-button color="primary">Login</button>
